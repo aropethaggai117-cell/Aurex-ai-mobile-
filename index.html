@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Aurex AI</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#030A1A"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--bg:#030A1A;--p:#0A1E3A;--s:#0090FF;--a:#7DFFFF;--t:#E8F4FF;--mut:#8FB0D0;--gl:rgba(120,190,255,.09);--bd:rgba(160,215,255,.22);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#030A1A}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(900px 500px at 50% -10%,#0B3A7A 0,transparent 60%),radial-gradient(600px 400px at 100% 100%,#06326a66,transparent 60%),var(--bg);color:var(--t);font:16px/1.45 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow:hidden}
+#app{height:100%;max-width:520px;margin:0 auto;display:flex;flex-direction:column;position:relative}
+.glass{background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.03));border:1px solid var(--bd);backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -8px 16px rgba(0,144,255,.08),0 8px 30px rgba(0,0,0,.4)}
+header{display:flex;align-items:center;gap:10px;padding:12px 16px}
+header h1{flex:1;margin:0;font-size:18px;letter-spacing:.18em;font-weight:600}
+header h1 b{color:var(--a)}
+.ib{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--t);font-size:18px;cursor:pointer}
+main{flex:1;overflow-y:auto;padding:4px 16px 12px;position:relative}
+.scr{display:none;min-height:100%}.scr.on{display:flex;flex-direction:column;animation:in .35s}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+nav{display:flex;margin:6px 12px 10px;padding:6px;border-radius:30px;gap:2px}
+nav button{flex:1;background:none;border:0;color:var(--mut);padding:8px 0 6px;border-radius:24px;font-size:11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button span{font-size:20px;line-height:1}
+nav button.on{color:#fff;background:linear-gradient(160deg,rgba(0,144,255,.55),rgba(125,255,255,.18));box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 18px rgba(0,144,255,.5)}
+.orb{width:210px;height:210px;margin:18px auto;border-radius:50%;position:relative;display:grid;place-items:center;cursor:pointer}
+.orb i{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(125,255,255,.5);box-shadow:0 0 30px rgba(0,144,255,.6),inset 0 0 30px rgba(0,144,255,.35);animation:pu 3s infinite}
+.orb i:nth-child(2){inset:22px;animation-delay:.6s;border-color:rgba(0,144,255,.8)}
+.orb i:nth-child(3){inset:46px;animation-delay:1.2s}
+.orb.live i{animation-duration:1s}
+@keyframes pu{50%{transform:scale(1.06);opacity:.6}}
+.orb b{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;font-size:40px;background:radial-gradient(circle at 30% 25%,#fff8,#0090FF 45%,#021a45);box-shadow:0 0 40px #0090ffaa,inset 0 2px 6px #fff9}
+h2{margin:0;text-align:center;font-weight:500;letter-spacing:.12em}
+.sub{text-align:center;color:var(--mut);margin:4px 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0}
+.chip{padding:9px 14px;border-radius:20px;color:var(--t);font-size:14px;cursor:pointer}
+.msgs{flex:1;display:flex;flex-direction:column;gap:10px;padding-bottom:8px}
+.m{max-width:86%;padding:10px 14px;border-radius:20px;word-wrap:break-word;white-space:pre-wrap}
+.m.u{align-self:flex-end;background:linear-gradient(150deg,rgba(0,144,255,.6),rgba(0,70,160,.5));border:1px solid var(--bd);border-bottom-right-radius:6px}
+.m.a{align-self:flex-start;border-bottom-left-radius:6px}
+.m code{background:#0006;padding:1px 5px;border-radius:5px;font-family:ui-monospace,Menlo,monospace;font-size:13px}
+.bar{display:flex;gap:8px;padding:8px 12px 4px;align-items:flex-end}
+.bar .in{flex:1;border-radius:24px;padding:4px 6px 4px 16px;display:flex;align-items:center}
+.bar textarea{flex:1;background:none;border:0;outline:0;color:var(--t);font:inherit;resize:none;max-height:100px;padding:8px 0}
+.go{width:44px;height:44px;border-radius:50%;border:0;color:#fff;font-size:18px;cursor:pointer;background:linear-gradient(160deg,#37b0ff,#0060d0);box-shadow:inset 0 1px 0 #fff8,0 0 18px #0090ff88}
+.card{border-radius:22px;padding:14px 16px;display:flex;gap:12px;align-items:center;cursor:pointer;margin-bottom:10px}
+.card small{color:var(--mut);display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tool{border-radius:22px;padding:16px 12px;text-align:center;cursor:pointer}
+.tool span{font-size:30px;display:block}.tool small{color:var(--mut)}
+.row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:18px;margin-bottom:10px}
+.sw{width:50px;height:28px;border-radius:14px;background:#0006;border:1px solid var(--bd);position:relative;cursor:pointer}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.25s}
+.sw.on{background:var(--s)}.sw.on::after{left:24px}
+.pv{width:100%;border-radius:22px;max-height:300px;object-fit:cover;margin:10px 0}
+.drop{border-radius:22px;padding:40px 16px;text-align:center;color:var(--mut);cursor:pointer;margin:10px 0}
+.pill{display:inline-block;margin-top:14px;padding:12px 26px;border-radius:26px;border:0;color:#fff;font-size:16px;cursor:pointer;background:linear-gradient(160deg,#37b0ff,#0060d0);box-shadow:inset 0 1px 0 #fff8,0 0 20px #0090ff77}
+.wave{display:flex;gap:4px;justify-content:center;height:40px;align-items:center}
+.wave u{width:4px;height:8px;border-radius:3px;background:var(--a);animation:wv 1s infinite ease-in-out}
+@keyframes wv{50%{height:36px}}
+.hint{color:var(--mut);text-align:center;font-size:13px;margin:6px 0}
+</style></head><body>
+<div id="app">
+<header><div class="ib glass" id="hm">☰</div><h1><b>A</b>UREX AI</h1><div class="ib glass" id="hs">⚙</div></header>
+<main>
+<section class="scr on" id="home">
+<div class="orb" id="orb"><i></i><i></i><i></i><b>▲</b></div>
+<h2>AUREX AI</h2><p class="sub">Think · Understand · Help</p>
+<div class="chips" id="hchips"></div>
+</section>
+<section class="scr" id="chat"><div class="msgs" id="msgs"></div></section>
+<section class="scr" id="voice" style="align-items:center;text-align:center">
+<div class="orb" id="vorb"><i></i><i></i><i></i><b>🎙</b></div>
+<h2 id="vst">Tap to speak</h2><div class="wave" id="wave" style="visibility:hidden"><u></u><u style="animation-delay:.1s"></u><u style="animation-delay:.2s"></u><u style="animation-delay:.3s"></u><u style="animation-delay:.4s"></u><u style="animation-delay:.2s"></u><u style="animation-delay:.1s"></u></div>
+<div class="m a" id="vtx" style="margin-top:14px;max-width:100%;text-align:left;display:none"></div>
+<p class="hint" id="vh"></p>
+</section>
+<section class="scr" id="vision">
+<div class="drop glass" id="drop">📷<br>Tap to choose an image</div>
+<input type="file" accept="image/*" id="file" hidden>
+<img class="pv" id="pv" hidden>
+<div class="chips"><div class="chip glass" data-q="Describe this image in detail.">Describe</div><div class="chip glass" data-q="Read and extract any text in this image.">Read text</div><div class="chip glass" data-q="What is notable or unusual here?">Insights</div></div>
+<div class="m a" id="vo" style="display:none;max-width:100%"></div>
+</section>
+<section class="scr" id="memory"><div id="mlist"></div></section>
+<section class="scr" id="tools"><div class="grid" id="tgrid"></div></section>
+<section class="scr" id="settings">
+<div class="card glass" style="cursor:default"><span style="font-size:30px">👤</span><div><b>AUREX User</b><small>Free Plan</small></div></div>
+<div class="row glass">Speak replies<div class="sw" id="sp"></div></div>
+<div class="row glass">Save conversations<div class="sw on" id="sv"></div></div>
+<div class="row glass" id="clr" style="cursor:pointer">Clear all memory<span>🗑</span></div>
+<div class="row glass" style="flex-direction:column;align-items:stretch;gap:8px">Server (Worker URL)<input id="api" placeholder="https://aurex.yourname.workers.dev" style="background:#0005;border:1px solid var(--bd);border-radius:12px;padding:10px;color:var(--t);font:inherit"></div>
+<div class="row glass">About AUREX<small style="color:var(--mut)">Version 1.0</small></div>
+<p class="hint">Your conversations stay in this browser. Messages are processed online by an AI model through your own server.</p>
+</section>
+</main>
+<div class="bar" id="bar"><div class="in glass"><textarea id="ta" rows="1" placeholder="Ask anything…"></textarea></div><button class="go" id="send">➤</button></div>
+<nav class="glass" id="nav">
+<button data-s="home" class="on"><span>◎</span>Home</button><button data-s="chat"><span>💬</span>Chat</button><button data-s="voice"><span>🎙</span>Voice</button><button data-s="vision"><span>👁</span>Vision</button><button data-s="tools"><span>🛠</span>Tools</button>
+</nav>
+</div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const BASE="You are AUREX AI, a capable, concise, friendly AI assistant in a mobile app. Answer directly and helpfully; keep replies compact unless asked for detail.";
+const TOOLS=[["🧮","Calculator","Quick calculations","Act as a calculator and math solver. Show the result first, then brief steps."],["🔍","Web Search","Find answers","Act as a research assistant. Give a clear, well-organised answer and note uncertainty."],["🌐","Translator","Any language","Act as a translator. Translate the user’s text; if no target language is given, ask or translate to English."],["</>","Code Helper","Write & debug","Act as an expert programmer. Give correct, minimal code with short explanations."],["📝","Summarizer","Shorten text","Summarize the user’s text into key points."],["📅","Planner","Plan your day","Act as a planner. Turn the user’s goals into a realistic schedule."]];
+const CHIPS=["Summarize text","Plan my day","Help with coding","Explain simply"];
+let convs=[],cur=null,busy=false,mode="",speak=false,save=true,img=null;
+try{convs=JSON.parse(localStorage.getItem("aurex")||"[]")}catch(e){}
+const persist=()=>{try{save&&localStorage.setItem("aurex",JSON.stringify(convs.slice(0,40)))}catch(e){}};
+function show(s){$$(".scr").forEach(e=>e.classList.toggle("on",e.id==s));$$("nav button").forEach(b=>b.classList.toggle("on",b.dataset.s==s));
+$("#bar").style.display=(s=="home"||s=="chat")?"flex":"none";$("main").scrollTop=0;if(s=="memory")renderMem()}
+$$("nav button").forEach(b=>b.onclick=()=>{if(b.dataset.s=="chat"&&!cur)newChat();show(b.dataset.s)});
+$("#hm").onclick=()=>show("memory");$("#hs").onclick=()=>show("settings");
+function fmt(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/`([^`]+)`/g,"<code>$1</code>")}
+function newChat(m){cur={id:Date.now(),title:"New chat",msgs:[],mode:m||""};mode=cur.mode;convs.unshift(cur);$("#msgs").innerHTML=""}
+function bubble(r,t){const d=document.createElement("div");d.className="m "+(r=="user"?"u":"a glass");d.innerHTML=fmt(t);$("#msgs").appendChild(d);$("main").scrollTop=1e9;return d}
+const DEFAULT_API="PASTE_YOUR_WORKER_URL_HERE";
+const gl=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+async function ai(arr,o={}){const h=arr.map((m,i)=>i?m:{role:m.role,content:BASE+(mode?" "+mode:"")+"\n\n"+m.content});
+const u=gl("aurex_api")||DEFAULT_API;if(!u.startsWith("http"))throw{message:"Add your Worker URL in Settings first."};
+let r;try{r=await fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:h,image:o.image||null})})}catch(e){throw{message:"Can’t reach the server. Check your connection."}}
+const j=await r.json().catch(()=>({}));if(!r.ok)throw{message:j.error||"Server error"};if(o.onText)o.onText({text:j.text});return j}
+async function ask(text){if(busy||!text.trim())return;busy=true;if(!cur)newChat();
+if(!$("#chat").classList.contains("on"))show("chat");
+cur.msgs.push({role:"user",content:text});if(cur.title=="New chat")cur.title=text.slice(0,40);
+bubble("user",text);const b=bubble("a","…");
+try{const r=await ai(cur.msgs,{onText:({text})=>{b.innerHTML=fmt(text);$("main").scrollTop=1e9}});
+b.innerHTML=fmt(r.text);cur.msgs.push({role:"assistant",content:r.text});cur.ts=Date.now();persist();if(speak)say(r.text)}
+catch(e){b.textContent="⚠ "+(e.message||"Something went wrong. Try again.");cur.msgs.pop()}
+busy=false}
+const ta=$("#ta");ta.oninput=()=>{ta.style.height="auto";ta.style.height=ta.scrollHeight+"px"};
+const go=()=>{const v=ta.value;ta.value="";ta.style.height="auto";ask(v)};
+$("#send").onclick=go;ta.onkeydown=e=>{if(e.key=="Enter"&&!e.shiftKey){e.preventDefault();go()}};
+$("#hchips").innerHTML=CHIPS.map(c=>`<div class="chip glass">${c}</div>`).join("");
+$$("#hchips .chip").forEach(c=>c.onclick=()=>{ta.value=c.textContent+": ";show("chat");if(!cur)newChat();ta.focus()});
+$("#orb").onclick=()=>{show("voice");toggleVoice()};
+$("#tgrid").innerHTML=TOOLS.map((t,i)=>`<div class="tool glass" data-i="${i}"><span>${t[0]}</span><b>${t[1]}</b><small>${t[2]}</small></div>`).join("");
+$$(".tool").forEach(e=>e.onclick=()=>{const t=TOOLS[e.dataset.i];newChat(t[3]);cur.title=t[1];bubble("a",t[0]+" "+t[1]+" is ready. What do you need?");show("chat");ta.focus()});
+function renderMem(){const l=$("#mlist");if(!convs.length){l.innerHTML='<p class="hint">No conversations yet.</p>';return}
+l.innerHTML=convs.map(c=>`<div class="card glass" data-id="${c.id}">💬<div style="flex:1"><b>${fmt(c.title)}</b><small>${c.msgs.length} messages${c.ts?" · "+new Date(c.ts).toLocaleDateString():""}</small></div><span data-d="${c.id}">✕</span></div>`).join("");
+$$("#mlist .card").forEach(e=>e.onclick=ev=>{const id=+(ev.target.dataset.d||0);if(id){convs=convs.filter(c=>c.id!=id);persist();if(cur&&cur.id==id)cur=null;return renderMem()}
+cur=convs.find(c=>c.id==e.dataset.id);mode=cur.mode||"";$("#msgs").innerHTML="";cur.msgs.forEach(m=>bubble(m.role,m.content));show("chat")})}
+const tog=(id,f)=>$(id).onclick=()=>{$(id).classList.toggle("on");f($(id).classList.contains("on"))};
+tog("#sp",v=>speak=v);tog("#sv",v=>{save=v;if(!v)try{localStorage.removeItem("aurex")}catch(e){}});
+$("#clr").onclick=()=>{convs=[];cur=null;try{localStorage.removeItem("aurex")}catch(e){}$("#clr").firstChild.textContent="Memory cleared ✓"};
+function say(t){try{speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t.replace(/[*`]/g,"")))}catch(e){}}
+let rec=null,live=false;
+function toggleVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!SR){$("#vh").textContent="Speech recognition isn’t supported here. Use the chat instead.";return}
+if(live){rec&&rec.stop();return}
+rec=new SR();rec.interimResults=true;let fin="";
+rec.onstart=()=>{live=true;$("#vorb").classList.add("live");$("#wave").style.visibility="visible";$("#vst").textContent="Listening…";$("#vh").textContent="Tap to stop"};
+rec.onresult=e=>{fin=[...e.results].map(r=>r[0].transcript).join(" ");$("#vtx").style.display="block";$("#vtx").textContent=fin};
+rec.onerror=e=>{$("#vh").textContent="Microphone unavailable ("+e.error+")."};
+rec.onend=async()=>{live=false;$("#vorb").classList.remove("live");$("#wave").style.visibility="hidden";$("#vst").textContent="Tap to speak";
+if(!fin.trim())return;$("#vst").textContent="Thinking…";
+try{const r=await ai([{role:"user",content:fin+"\n\n(Voice conversation: reply in 1-3 short spoken sentences.)"}]);$("#vtx").innerHTML=fmt(r.text);say(r.text)}catch(e){$("#vtx").textContent="⚠ "+(e.message||"Error")}
+$("#vst").textContent="Tap to speak";$("#vh").textContent=""};
+rec.start()}
+$("#vorb").onclick=toggleVoice;
+$("#drop").onclick=()=>$("#file").click();
+$("#file").onchange=e=>{const f=e.target.files[0];if(!f)return;img=f;$("#pv").src=URL.createObjectURL(f);$("#pv").hidden=false;$("#drop").style.display="none"};
+function shrink(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const k=Math.min(1,1024/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);ok({mime:"image/jpeg",data:c.toDataURL("image/jpeg",.85).split(",")[1]})};im.onerror=no;im.src=URL.createObjectURL(f)})}
+$$("#vision .chip").forEach(c=>c.onclick=async()=>{if(!img){$("#file").click();return}
+const o=$("#vo");o.style.display="block";o.textContent="Analyzing image…";
+try{const image=await shrink(img);const r=await ai([{role:"user",content:c.dataset.q}],{image});o.innerHTML=fmt(r.text)}
+catch(e){o.textContent="⚠ "+(e.message||"Couldn’t analyze the image.")}});
+$("#api").value=gl("aurex_api")||"";$("#api").onchange=e=>{try{localStorage.setItem("aurex_api",e.target.value.trim())}catch(x){}};
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+show("home");
+</script></body></html>
